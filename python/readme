@@ -1,0 +1,12 @@
+20/8/17 upload python code v1 change to your host, appid, key, secret 
+///////////////////////////////////////////
+#---------------php-----------------------------------
+host = 'wimarcfarm.000webhostapp.com' #insert your hostname
+
+#-------------NETPIE------------------
+import microgear.client as client
+
+gearkey = 'aaaaaaaaaaaaaaaaaa' #insert your key
+gearsecret =   'bbbbbbbbbbbbbbbbbbbbbbbbbb' #insert your secret
+appid =  'cccc' # insert your appid 
+////////////////////////////////////////////////////////////
