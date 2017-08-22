@@ -2497,7 +2497,7 @@ while True:
         
         #client.chat("GHxx","Hello world. "+str(int(time.time())))
         if length > 10:
-            client.publish("/wimarcfarm/station",timestamp+","+str(temp)+","+str(humid)+","+str(rain)+","+str(winds)+","+str(windd)+","+str(mois1)+","+str(mois2)+","+str(lux))
+            client.publish("/wimarcfarm/station",timestamp+","+str(temp)+","+str(humid)+","+str(lux)+","+str(winds)+","+str(mois1)+","+str(soiltemp)+","+str(mois2)+","+str(lux))
             time.sleep(1)
             client.publish("/wimarcfarm/A",timestamp+","+str(ax_rcvAF)+","+str(ax_rcvAS)+","+str(ax_rcvBF)+","+str(ax_rcvBS)+","+str(ax_rcvCF)+","+str(ax_rcvCS)+","+str(ax_rcvDF)+","+str(ax_rcvDS))
             time.sleep(1)
