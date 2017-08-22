@@ -538,7 +538,7 @@ int   randNumber=random(100);Serial.print("Random Number:"); Serial.println(rand
 
 ///////////////////////////////////////////////////////////////   
          
-// Humidity measurement    at vIn0   
+// temperature measurement    at vIn0   
   
 ///////////////////////////////////////////////////////////////  
 
@@ -551,17 +551,14 @@ int   randNumber=random(100);Serial.print("Random Number:"); Serial.println(rand
  
  vIn0 = (vIn0+lastvalue)/2;
  
-// RH = ((vIn0)-800)/0.31;
-RH= (1250*vIn0)/voltref-1250;
-if (RH > 10000)
-RH=10000;
+
  
  tempT = (vIn0*2187.5)/voltref-6687.5;
  Serial.print("Temp  ="); Serial.print(tempT,1); Serial.println(" C");
  
 
  
- Serial.print("Humid =");Serial.print(RH); Serial.println(" %"); 
+
 
   delay(500);
   ReadDataFromRF();
@@ -571,7 +568,7 @@ RH=10000;
  
 /////////////////////////////////////////////////////////////////////
 
-// ambient temperature measurement at vIn1
+// humidity measurement at vIn1
 
 //////////////////////////////////////////////////////////////////// 
 
@@ -752,11 +749,11 @@ Supvoltage = Supvoltage*11+700;
  delay(500);     
   v1=vIn0;
   v2= vIn1;  
-  v3=vIn2;
-  v4==vIn3;
-  v5=vIn4;
-  v6=vIn5;
-  v7=vIn6;
+  v3=vIn3;
+  v4==vIn4;
+  v5=vIn5;
+  v6=vIn6;
+  v7=vIn2;
   v8=Supvoltage; 
  
 ProcessSendESP('V');
