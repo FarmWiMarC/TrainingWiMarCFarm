@@ -748,7 +748,7 @@ while True:
               pprint.pprint('access file error')
          record =0;
          '''  
-         query_args = { 'date': rcvH, 'time':rcvSR,'Temp':m_rcvAF, 'Humid':m_rcvAS,'Rain':m_rcvBF,'WindS':m_rcvBS,'WindD':m_rcvCF, 'M1':m_rcvCS,'M2':m_rcvDF,'Lux':m_rcvDS}
+         query_args = { 'date': rcvH, 'time':rcvSR,'Temp':m_rcvAF, 'Humid':m_rcvAS,'Light':m_rcvBF,'Pressure':m_rcvBS,'M1':m_rcvCF, 'SoilTemp':m_rcvCS,'M2':m_rcvDF,'Supply':m_rcvDS}
          # This urlencodes your data (that's why we need to import urllib at the top)
          data = urllib.urlencode(query_args)
          # Send HTTP POST request
