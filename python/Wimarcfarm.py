@@ -25,16 +25,14 @@ lastTime = datetime.datetime.now()
 recordLastTime = lastTime.minute
 
 #---------------php-----------------------------------
-host = 'wimarcfarm.000webhostapp.com' #insert your hostname
+host = 'xxxxxxxxxxxx.000webhostapp.com' #insert your hostname
 
 #-------------NETPIE------------------
 import microgear.client as client
 
-gearkey = 'aaaaaaaaaaaaaaaaaa' #insert your key
-gearsecret =   'bbbbbbbbbbbbbbbbbbbbbbbbbb' #insert your secret
-appid =  'cccc' # insert your appid 
-
-
+gearkey = 'bbbbbbbbbbbbbbbbbbbbbbbbbbbb'
+gearsecret =   'ccccccccccccccccccccccccc'
+appid =  'aaaaaaaaaaaaaaa' 
 headers = {
     'User-Agent': 'python',
     'Content-Type': 'application/x-www-form-urlencoded',
@@ -66,25 +64,15 @@ urlH = '/PHPwimarcfarm/InsertIn_h.php'
 
 
 #  init variable
-tempAtop = 0      
-tempAmid = 0      #recieve A Data Second part
-        
-tempAbot = 0
+soiltemp=0
+supplyvolt=0
 
-humidA = 0
-      
-        
 connectcount=0
        
-tempBtop = 0
-       
-tempBmid = 0
-        
-tempBbot = 0
+
         
 
-humidB = 0
-               
+
 
 
 
@@ -475,10 +463,7 @@ def subscription(topic,message):
     global netpiecount
     #logging.debug(topic+" "+message)
     print topic+" "+message
-    if topic == "/tmec/GHbangyai/station" :
-        checkmessage = message
-        print checkmessage
-        netpiecount = 0 
+    
 
 def disconnect():
     global connect
@@ -503,48 +488,10 @@ def read_serial(ser):
     buf = ''
     i=0
     j=0
-    """
-    inp = ser.read(size=1)
-    print inp
-    if inp == 'P' :
-        while True:
-            inp = ser.read(size=1) #read a byte
-        #print inp.encode("hex") #gives me the correct bytes, each on a newline
-            buf = buf + inp #accumalate the response
-            i=i+1
-        #if '\xFF' == inp:
-            if i > 25 :
-                print inp.encode("hex") # never here
-                break
-                return buf  
-            
-    """
-    #inp = ser.read(size=1)
-    #print inp
-    """
-    try :
-        inp = ser.read(size=1) #read a byte
-    except :
-        print "no input"
-            #break
-    if inp == 'P' :
-        buf = inp
-        while i < 26:
-            inp = ser.read(size=1) #read a byte
-                #print inp.encode("hex") #gives me the correct bytes, each on a newline
-            buf = buf + inp #accumalate the response
-            i=i+1
-            j=0
-        #if '\xFF' == inp:
-        #if i > 25 :
-        #        print inp.encode("hex") # never here
-        
-    return buf
-    """
-
     
     while True:
         j=j+1
+        
         try :
             inp = ser.read(size=1) #read a byte
         except :
@@ -558,14 +505,13 @@ def read_serial(ser):
                 buf = buf + inp #accumalate the response
                 i=i+1
                 j=0
-        #if '\xFF' == inp:
-        #if i > 25 :
-        #        print inp.encode("hex") # never here
+        
             break
+        print j
         if j > 10 :
             print "No input"
             break
-    return buf
+    return buf 
     
     
 
@@ -574,8 +520,7 @@ def read_serial(ser):
 while True:
     #  get date and time
     
-    netpiecount=netpiecount+1
-    print 'netpiecount= '+str(netpiecount)
+    
     from time import strftime
     rcvH=strftime("%Y-%m-%d ")
     rcvSR=strftime("%H:%M:%S ")
@@ -1389,17 +1334,7 @@ while True:
         strHeader = "PTA"
     pprint.pprint(' Nodata ='+ str(nodata))
     
-    if netpiecount > 200 :
-        time.sleep (5);
-        GPIO.setwarnings(False)
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(17, GPIO.IN)
-        GPIO.setup(23, GPIO.OUT)
-        input_value = GPIO.input(17)
-        GPIO.output(23, GPIO.HIGH)
-        time.sleep (10);
-        GPIO.output(23, GPIO.LOW)
-        
+    
 
     if rcv == '' :
          h_rcvAF =str(nodata)
@@ -1408,29 +1343,14 @@ while True:
     
         
          if nodata > 500 :
-             rcvH=strftime("%Y-%m-%d ")
-             rcvSR=strftime("%H:%M:%S ")
-             query_args = { 'date': rcvH, 'time':rcvSR,'A':h_rcvAF, 'B':h_rcvAS,'C':h_rcvBF,'D':h_rcvBS,'E':h_rcvCF, 'F':h_rcvCS,'G':h_rcvDF,'H':h_rcvDS}
-             # This urlencodes your data (that's why we need to import urllib at the top)
-             data = urllib.urlencode(query_args)
-             # Send HTTP POST request
-             try :
-                 c = pycurl.Curl()
-                 c.setopt(c.URL,urlstatus)
-                 c.setopt(c.POSTFIELDS, data)
-                 c.perform()
-                 c.close()
-             except:
-                 print 'write to server error..try again'
-             time.sleep (5);
              GPIO.setwarnings(False)
              GPIO.setmode(GPIO.BCM)
              GPIO.setup(17, GPIO.IN)
-             GPIO.setup(23, GPIO.OUT)
+             GPIO.setup(18, GPIO.OUT)
              input_value = GPIO.input(17)
-             GPIO.output(23, GPIO.HIGH)
+             GPIO.output(18, GPIO.HIGH)
              time.sleep (10);
-             GPIO.output(23, GPIO.LOW)
+             GPIO.output(18, GPIO.LOW)
               
     else :
          nodata =0
@@ -2213,6 +2133,8 @@ while True:
                         
                         m_rcvCS = ord(rcv[17])<<8
                         m_rcvCS = m_rcvCS+ord(rcv[18])-1000      #recieve D Data First part
+                        m_rcvCS = (float(m_rcvCS))/100      #recieve A Data Second part
+                        m_rcvCS = format(m_rcvCS, '.2f')
                         pprint.pprint('Get F '+str( m_rcvCS))
 
 
@@ -2245,7 +2167,7 @@ while True:
                         
                         m_rcvDS = ord(rcv[23])<<8
                         m_rcvDS = m_rcvDS+ord(rcv[24])-1000      #recieve D Data First part
-                        m_rcvDS = (float(m_rcvDS))/10      #recieve A Data Second part
+                        m_rcvDS = (float(m_rcvDS))/1000      #recieve A Data Second part
                         m_rcvDS = format(m_rcvDS, '.2f')
                         pprint.pprint('Get H '+str( m_rcvDS))        
      
@@ -2416,17 +2338,18 @@ while True:
         if m_rcvAS > 0 :
              humid = m_rcvAS      #recieve A Data Second part
         if m_rcvBF > 0 :
-             rain = m_rcvBF    #recieve B Data First part
+             lux= m_rcvBF
+             #rain = m_rcvBF    #recieve B Data First part
         if m_rcvBS > 0 :
              winds = m_rcvBS    #recieve B Data Second part
         if m_rcvCF > 0 :
-             windd = m_rcvCF      #recieve A Data Second part
+             mois1 = m_rcvCF      #recieve A Data Second part
         if m_rcvCS > 0 :
-             mois1 = m_rcvCS      #recieve A Data Second part
+             soiltemp = m_rcvCS      #recieve A Data Second part
         if m_rcvDF > 0 :
              mois2 = m_rcvDF    #recieve B Data First part
         if m_rcvDS > 0 :
-             lux = m_rcvDS    #recieve B Data Second part 
+             supplyvolt = m_rcvDS    #recieve B Data Second part 
         
         if a_rcvAF > 0 :
              ax_rcvAF = a_rcvAF      #recieve A Data Second part
@@ -2616,7 +2539,7 @@ while True:
             time.sleep(1)
             connect =1
             connectcount=0
-            client.subscribe("/GH/station")
+            
         except :
             print "No netpie"
             connectcount=connectcount+1
