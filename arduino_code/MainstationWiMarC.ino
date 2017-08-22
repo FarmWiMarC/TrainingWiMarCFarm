@@ -396,13 +396,13 @@ void setup()
     Supvoltage = Supvoltage/102.3-voltoffset;
     Supvoltage = Supvoltage*11+700;
 
- v1=vIn0;
+  v1=vIn0;
   v2= vIn1;  
-  v3=vIn2;
-  v4==vIn3;
-  v5=vIn4;
-  v6=vIn5;
-  v7=vIn6;
+  v3=vIn3;
+  v4==vIn4;
+  v5=vIn5;
+  v6=vIn6;
+  v7=vIn2;
   v8=Supvoltage; 
 
 
@@ -616,11 +616,11 @@ Serial.print("Humid =");Serial.print(RH); Serial.println(" %");
   delay(500);     
   v1=vIn0;
   v2= vIn1;  
-  v3=vIn2;
-  v4==vIn3;
-  v5=vIn4;
-  v6=vIn5;
-  v7=vIn6;
+  v3=vIn3;
+  v4==vIn4;
+  v5=vIn5;
+  v6=vIn6;
+  v7=vIn2;
   v8=Supvoltage; 
  
 ProcessSendESP('V');
