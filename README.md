@@ -1,7 +1,6 @@
 You are welcomed to join us and comment in our 
 facebook:  IoT Wimarc Farm
-https://www.facebook.com/groups/19174575
-81829558/
+https://www.facebook.com/groups/1917457581829558/
 
 
 1. Download Aduino IDE and install it in your computer from
